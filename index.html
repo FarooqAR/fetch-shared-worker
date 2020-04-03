@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XHR in Shared Workers</title>
+    <title>Fetch in Shared Workers</title>
 </head>
 <body>
-    <h2>XHR in Shared Workers</h2>
+    <h2>Fetch in Shared Workers</h2>
     <div>
         <button id="click-fetch">Click to Fetch!</button>
     </div>
@@ -16,8 +16,11 @@
     <script>
         const sharedWorker = new SharedWorker('shared-worker.js');
         sharedWorker.port.onmessage = function (e) {
-            document.getElementById("result").innerHTML = e.data;
+            document.getElementById("result").innerHTML = JSON.stringify(e.data);
         };
+        document.getElementById('click-fetch').onclick = function () {
+            sharedWorker.port.postMessage('clicked');
+        }
     </script>
 </body>
 </html>
